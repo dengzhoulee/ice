@@ -1,0 +1,40 @@
+{
+  "apps": [
+    {
+      "name": "Ice",
+      "script": "server.js",
+      "env": {
+        "COMMON_VARIABLE": "true"
+      },
+      "env_production": {
+        "NODE_ENV": "production"
+      }
+    }
+  ],
+  "deploy": {
+    "production": {
+      "user": "yaphet",
+      "host": "47.100.172.197",
+      "ref": "origin/master",
+      "repo": "git@github.com:l-d-z/ice.git",
+      "path": "/home/yaphet/ice/prod",
+      "ssh_options": "StrictHostKeyChecking=no",
+      "post-deploy": "yarn && pm2 reload ecosystem.json --env production",
+      "pre-deploy-local": "echo 'deploy done!'",
+      "env": {
+        "NODE_ENV": "production"
+      }
+    },
+    "dev": {
+      "user": "yaphet",
+      "host": "47.100.172.197",
+      "ref": "origin/master",
+      "repo": "git@github.com:l-d-z/ice.git",
+      "path": "/home/yaphet/ice/dev",
+      "post-deploy": "yarn && pm2 reload ecosystem.json --env dev",
+      "env": {
+        "NODE_ENV": "dev"
+      }
+    }
+  }
+}
