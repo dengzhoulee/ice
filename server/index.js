@@ -5,7 +5,7 @@ import { resolve } from 'path'
 
 // Import and Set Nuxt.js options
 let config = require('../nuxt.config.js');
-config.dev = !(app.env === 'production');
+config.dev = !(process.env === 'production');
 
 const r = path => resolve(__dirname, path);
 const host = process.env.HOST || '127.0.0.1';
@@ -18,7 +18,7 @@ class Server {
     this.useMiddleWares(this.app)(MIDDLEWARES);
   }
 
-  static useMiddleWares(app) {
+  useMiddleWares(app) {
     return R.map(R.compose(
       R.map(i => i(app)),
       require,
@@ -34,8 +34,7 @@ class Server {
       const builder = new Builder(nuxt);
       await builder.build()
     }
-
-    app.use(async (ctx, next) => {
+    this.app.use(async (ctx, next) => {
       await next();
       ctx.status = 200; // koa defaults to 404 when it sees that status is unset
       return new Promise((resolve, reject) => {
@@ -48,8 +47,9 @@ class Server {
       })
     });
 
-    app.listen(port, host);
-    console.log('Server listening on ' + host + ':' + port) // eslint-disable-line no-console
+    this.app.listen(port, host, () => {
+      console.log('Server listening on ' + host + ':' + port) // eslint-disable-line no-console
+    });
   }
 }
 
