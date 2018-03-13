@@ -15,7 +15,9 @@
     "cross-env": "^5.0.1",
     "koa": "^2.4.1",
     "koa-router": "v7.2.1",
+    "mongoose": "^5.0.9",
     "nuxt": "latest",
+    "request-promise": "^4.2.2",
     "sha1": "^1.1.1",
     "source-map-support": "^0.4.15"
   },

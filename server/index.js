@@ -10,7 +10,7 @@ config.dev = !(process.env === 'production');
 const r = path => resolve(__dirname, path);
 const host = process.env.HOST || '127.0.0.1';
 const port = process.env.PORT || 3000;
-const MIDDLEWARES = ['router'];
+const MIDDLEWARES = ['database', 'router'];
 
 class Server {
   constructor() {
@@ -48,7 +48,7 @@ class Server {
     });
 
     this.app.listen(port, host, () => {
-      console.log('Server listening on ' + host + ':' + port) // eslint-disable-line no-console
+      console.log('Server listening on http://' + host + ':' + port) // eslint-disable-line no-console
     });
   }
 }
